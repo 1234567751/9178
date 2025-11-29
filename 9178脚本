@@ -1,0 +1,919 @@
+game:GetService("StarterGui"):SetCore("SendNotification", {
+  Title = "9178脚本",
+  Text = "欢迎使用9178脚本",
+  Icon = "rbxassetid://18941716391",
+  Duration = 1,
+  Callback = bindable,
+  Button1 = "脚本功能多多",
+  Button2 = "感谢您的使用",
+})
+wait(1.5)
+game:GetService("StarterGui"):SetCore("SendNotification", {
+  Title = "9178脚本",
+  Text = "9178已重做 本来想搞成检测服务器ID的 后面还是因为麻烦 就不搞了",
+  Icon = "rbxassetid://18941716391",
+  Duration = 1,
+  Callback = bindable,
+  Button1 = "此脚本是永久免费的",
+  Button2 = "请勿倒卖",
+})
+wait(1.5)
+game:GetService("StarterGui"):SetCore("SendNotification", {
+  Title = "9178脚本",
+  Text = "每周都会更新几个服务器 更新有点慢 请见谅",
+  Icon = "rbxassetid://18941716391",
+  Duration = 2,
+  Callback = bindable,
+  Button1 = "祝您使用愉快",
+  Button2 = "玩的开心",
+})
+wait(1.5)
+local VirtualUserService = game:GetService("VirtualUser")
+game:GetService("Players").LocalPlayer.Idled:connect(function()
+  
+  VirtualUserService:Button2Down(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
+  wait(1)
+  VirtualUserService:Button2Up(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
+end)
+game:GetService("StarterGui"):SetCore("SendNotification", {
+  Title = "9178脚本",
+  Text = "已自动开启反挂机",
+  Icon = "rbxassetid://18941716391",
+  Duration = 2,
+  Callback = bindable,
+  Button1 = "开启成功",
+  Button2 = "谢谢使用",
+})
+local RevenantLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/bloodball/-back-ups-for-libs/main/Revenant", true))()
+RevenantLib.DefaultColor = Color3.fromRGB(255, 0, 0)
+RevenantLib:Notification({
+  Text = "9178脚本作者: 大牛与大妞\u{e000}",
+  Duration = 6,
+})
+wait(1)
+RevenantLib:Notification({
+  Text = "9178脚本帮助者: 大牛与大妞\u{e000}",
+  Duration = 6,
+})
+wait(1)
+RevenantLib:Notification({
+  Text = "谢谢大家一直以来的支持^ω^",
+  Duration = 6,
+})
+local PlayerConfig = {
+  playernamedied = "",
+  dropdown = {},
+  LoopTeleport = false,
+  message = "",
+  sayCount = 1,
+  sayFast = false,
+  autoSay = false,
+}
+local MovementConfig = {
+  tpwalkslow = 0,
+  tpwalkmobile = 0,
+  tpwalkquick = 0,
+  tpwalkslowenable = false,
+  tpwalkmobileenable = false,
+  tpwalkquickenable = false,
+  spinspeed = 0,
+  HitboxStatue = false,
+  HitboxSize = 0,
+  HitboxTransparency = 1,
+  HitboxBrickColor = "Really red",
+  DefaultFPS = 60,
+  CurrentFPS = 60,
+  FPSLocked = false,
+  FPSVisible = false,
+}
+local ColorConfig = {
+  ['红色']= Color3.fromRGB(255, 0, 0),
+  ['蓝色'] = Color3.fromRGB(0, 0, 255),
+  ['黄色'] = Color3.fromRGB(255, 255, 0),
+  ['绿色'] = Color3.fromRGB(0, 255, 0),
+  ['青色'] = Color3.fromRGB(0, 255, 255),
+  ['橙色'] = Color3.fromRGB(255, 165, 0),
+  ['紫色'] = Color3.fromRGB(128, 0, 128),
+  ['白色'] = Color3.fromRGB(255, 255, 255),
+  ['黑色'] = Color3.fromRGB(0, 0, 0),
+}
+local AimConfig = {
+  fovsize = 50,
+  fovlookAt = false,
+  fovcolor = Color3.fromRGB(0, 255, 0),
+  fovthickness = 2,
+  Visible = false,
+  distance = 200,
+  ViewportSize = 2,
+  Transparency = 5,
+  Position = "Head",
+  teamCheck = false,
+  wallCheck = false,
+  aliveCheck = false,
+  prejudgingselfsighting = false,
+  prejudgingselfsightingdistance = 100,
+  smoothness = 5,
+  aimSpeed = 5,
+  targetLock = false,
+  hitMarker = false,
+  dynamicFOV = false,
+  dynamicFOVScale = 1.5,
+  priorityMode = "Smart",
+  aimMode = "AI",
+  autoFire = false,
+  fireRate = 10,
+  bulletDelay = 0.1,
+  weaponSwitch = false,
+  threatPriority = false,
+  healthPriority = false,
+}
+local BodyPartMap = {
+  ['头部'] = "Head",
+  ['脖子'] = "HumanoidRootPart",
+  ['躯干'] = "Torso",
+  ['左臂'] = "Left Arm",
+  ['右臂'] = "Right Arm",
+  ['左腿'] = "Left Leg",
+  ['右腿'] = "Right Leg",
+  ['左手'] = "LeftHand",
+  ['右手'] = "RightHand",
+  ['左小臂'] = "LeftLowerArm",
+  ['右小臂'] = "RightLowerArm",
+  ['左大臂'] = "LeftUpperArm",
+  ['右大臂'] = "RightUpperArm",
+  ['左脚'] = "LeftFoot",
+  ['左小腿'] = "LeftLowerLeg",
+  ['上半身'] = "UpperTorso",
+  ['左大腿'] = "LeftUpperLeg",
+  ['右脚'] = "RightFoot",
+  ['右小腿'] = "RightLowerLeg",
+  ['下半身'] = "LowerTorso",
+  ['右大腿'] = "RightUpperLeg",
+}
+function shuaxinlb(includeSelf)
+  
+  PlayerConfig.dropdown = {}
+  if includeSelf == true then
+    for _, player in pairs(game.Players:GetPlayers()) do
+      table.insert(PlayerConfig.dropdown, player.Name)
+    end
+  else
+    local localPlayer = game.Players.LocalPlayer
+    for _, player in pairs(game.Players:GetPlayers()) do
+      if player ~= localPlayer then
+        table.insert(PlayerConfig.dropdown, player.Name)
+      end
+    end
+  end
+end
+shuaxinlb(true)
+function Notify(title, text, icon, duration)
+  
+  game:GetService("StarterGui"):SetCore("SendNotification", {
+    Title = title,
+    Text = text,
+    Icon = icon,
+    Duration = duration,
+  })
+end
+local function SafeCall(func, ...)
+  
+  local success, result = pcall(func, ...)
+  if not success then
+    return nil
+  end
+  return result
+end
+local FOVCircle = nil
+local FOVLine1 = nil
+local FOVLine2 = nil
+local function InitFOV(radius, color, thickness, transparency)
+  
+  local RunService = game:GetService("RunService")
+  local UserInputService = game:GetService("UserInputService")
+  local Players = game:GetService("Players")
+  local Camera = game.Workspace.CurrentCamera
+  if FOVCircle then
+    FOVCircle:Remove()
+    FOVCircle = nil
+  end
+  FOVCircle = Drawing.new("Circle")
+  FOVCircle.Visible = true
+  FOVCircle.Thickness = thickness
+  FOVCircle.Color = color
+  FOVCircle.Filled = false
+  FOVCircle.Radius = radius
+  FOVCircle.Position = Camera.ViewportSize / 2
+  FOVCircle.Transparency = transparency
+  FOVLine1 = Drawing.new("Line")
+  FOVLine1.Visible = false
+  FOVLine1.Thickness = 2
+  FOVLine1.Color = Color3.fromRGB(255, 0, 0)
+  FOVLine1.Transparency = 1
+  FOVLine2 = Drawing.new("Line")
+  FOVLine2.Visible = true
+  FOVLine2.Thickness = 1
+  FOVLine2.Color = Color3.fromRGB(255, 255, 255)
+  FOVLine2.Transparency = 1
+  local function UpdateFOVDisplay()
+    
+    local viewportSize = Camera.ViewportSize
+    FOVCircle.Position = viewportSize / 2
+    if AimConfig.dynamicFOV then
+      FOVCircle.Radius = AimConfig.fovsize * AimConfig.dynamicFOVScale
+    else
+      FOVCircle.Radius = AimConfig.fovsize
+    end
+    FOVLine2.From = Vector2.new(viewportSize.X / 2 - 5, viewportSize.Y / 2)
+    FOVLine2.To = Vector2.new(viewportSize.X / 2 + 5, viewportSize.Y / 2)
+    FOVLine2.From = Vector2.new(viewportSize.X / 2, viewportSize.Y / 2 - 5)
+    FOVLine2.To = Vector2.new(viewportSize.X / 2, viewportSize.Y / 2 + 5)
+  end
+  UserInputService.InputBegan:Connect(function(input)
+    
+    if input.KeyCode == Enum.KeyCode.Delete then
+      RunService:UnbindFromRenderStep("FOVUpdate")
+      FOVCircle:Remove()
+      FOVCircle = nil
+      FOVLine1:Remove()
+      FOVLine1 = nil
+      FOVLine2:Remove()
+      FOVLine2 = nil
+    end
+  end)
+  RunService.RenderStepped:Connect(function()
+    
+    UpdateFOVDisplay()
+  end)
+end
+local function CleanupFOV()
+  
+  if FOVCircle then
+    FOVCircle:Remove()
+    FOVCircle = nil
+  end
+  if FOVLine1 then
+    FOVLine1:Remove()
+    FOVLine1 = nil
+  end
+  if FOVLine2 then
+    FOVLine2:Remove()
+    FOVLine2 = nil
+  end
+end
+local function UpdateFOVSettings()
+  
+  if FOVCircle then
+    FOVCircle.Thickness = AimConfig.fovthickness
+    FOVCircle.Radius = AimConfig.fovsize
+    FOVCircle.Color = AimConfig.fovcolor
+    FOVCircle.Transparency = AimConfig.Transparency / 10
+  end
+end
+local function IsSameTeam(player)
+  
+  return player.Team == game.Players.LocalPlayer.Team
+end
+local function IsAlive(player)
+  
+  return player.Character and player.Character:FindFirstChild("Humanoid") and 0 < player.Character.Humanoid.Health
+end
+local function CheckWall(player, bodyPart)
+  
+  
+  if not AimConfig.wallCheck then
+    return true
+  end
+  local localCharacter = game.Players.LocalPlayer.Character
+  if not localCharacter then
+    return false
+  end
+  local targetPart = player.Character and player.Character:FindFirstChild(bodyPart)
+  if not targetPart then
+    return false
+  end
+  local ray = Ray.new(game.Workspace.CurrentCamera.CFrame.Position, targetPart.Position - game.Workspace.CurrentCamera.CFrame.Position)
+  local workspace = game.Workspace
+  local hitPart, hitPosition = workspace:FindPartOnRayWithIgnoreList(ray, {
+    localCharacter
+  })
+  local isVisible
+  if hitPart then
+    isVisible = hitPart:IsDescendantOf(player.Character)
+  else
+    isVisible = true
+  end
+  return isVisible
+end
+local function PredictPosition(player, part)
+  
+  return part.Position + part.AssemblyLinearVelocity * ((part.Position - game.Workspace.CurrentCamera.CFrame.Position)).Magnitude / 1000
+end
+local function IsInFOV(position)
+  
+  local camera = game.Workspace.CurrentCamera
+  local viewportPoint = camera:WorldToViewportPoint(position)
+  return (Vector2.new(viewportPoint.X, viewportPoint.Y) - camera.ViewportSize / 2).Magnitude <= AimConfig.fovsize
+end
+local function GetBestTarget(bodyPart)
+  
+  local bestScore = -math.huge
+  local bestTarget = nil	
+  for _, player in ipairs(game.Players:GetPlayers()) do
+    if (not AimConfig.aliveCheck or IsAlive(player)) and player ~= game.Players.LocalPlayer then
+      local targetPart = player.Character and player.Character:FindFirstChild(bodyPart)
+      if targetPart then
+        local distance = (targetPart.Position - game.Workspace.CurrentCamera.CFrame.Position).Magnitude
+        local speed = targetPart.AssemblyLinearVelocity.Magnitude
+        local viewportX, viewportY, isVisible = game.Workspace.CurrentCamera:WorldToViewportPoint(targetPart.Position)
+        local crosshairDistance = nil	
+        if isVisible then
+          crosshairDistance = Vector2.new(viewportX, viewportY)
+          crosshairDistance = (crosshairDistance - game.Workspace.CurrentCamera.ViewportSize / 2).Magnitude
+          if not crosshairDistance then
+            ::label_65::
+            crosshairDistance = math.huge
+          end
+        else
+          goto label_65	
+        end
+        local priorityScore = 0
+        if AimConfig.priorityMode == "Distance" then
+          priorityScore = -distance
+        elseif AimConfig.priorityMode == "Crosshair" then
+          priorityScore = -crosshairDistance
+        elseif AimConfig.priorityMode == "Speed" then
+          priorityScore = speed
+        elseif AimConfig.priorityMode == "Smart" then
+          priorityScore = -distance * 0.5 + speed * 0.3 - crosshairDistance * 0.2
+        end
+        if AimConfig.threatPriority then
+          priorityScore = priorityScore * (player:GetAttribute("ThreatLevel") or 1)
+        end
+        if AimConfig.healthPriority then
+          priorityScore = priorityScore * 1 / player.Character.Humanoid.Health
+        end
+        if bestScore < priorityScore and distance <= AimConfig.distance and (not AimConfig.teamCheck or AimConfig.teamCheck and not IsSameTeam(player)) and (not AimConfig.wallCheck or AimConfig.wallCheck and CheckWall(player, bodyPart)) then
+          bestScore = priorityScore
+          bestTarget = player
+        end
+      end
+    end
+  end
+  return bestTarget
+end
+local function AimAI()
+  
+  local target = GetBestTarget(AimConfig.Position)
+  if target and target.Character:FindFirstChild(AimConfig.Position) then
+    local targetPart = target.Character[AimConfig.Position]
+    local targetPosition = targetPart.Position
+    if IsInFOV(targetPosition) then
+      if AimConfig.prejudgingselfsighting then
+        targetPosition = PredictPosition(target, targetPart)
+      end
+      if (not AimConfig.teamCheck or not IsSameTeam(target)) and (not AimConfig.wallCheck or CheckWall(target, AimConfig.Position)) then
+        local smoothnessFactor = math.max(0.1, 1 / AimConfig.smoothness)
+        local aimSpeedFactor = math.max(0.1, AimConfig.aimSpeed * 0.1)
+        local currentCFrame = game.Workspace.CurrentCamera.CFrame
+        game.Workspace.CurrentCamera.CFrame = currentCFrame:Lerp(CFrame.new(currentCFrame.Position, targetPosition), smoothnessFactor * aimSpeedFactor)
+        if FOVLine1 then
+          local viewportPoint = game.Workspace.CurrentCamera:WorldToViewportPoint(targetPosition)
+          FOVLine1.From = Vector2.new(game.Workspace.CurrentCamera.ViewportSize.X / 2, game.Workspace.CurrentCamera.ViewportSize.Y / 2)
+          FOVLine1.To = Vector2.new(viewportPoint.X, viewportPoint.Y)
+          FOVLine1.Visible = true
+        end
+        if AimConfig.autoFire then
+          local tool = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool")
+          if tool and 1 / AimConfig.fireRate <= tick() - (tool:GetAttribute("LastFireTime") or 0) then
+            tool:Activate()
+            tool:SetAttribute("LastFireTime", tick())
+          end
+        end
+      end
+    elseif FOVLine1 then
+      FOVLine1.Visible = false
+    end
+  elseif FOVLine1 then
+    FOVLine1.Visible = false
+  end
+end
+local function AimFunction()
+  
+  local target = GetBestTarget(AimConfig.Position)
+  if target and target.Character:FindFirstChild(AimConfig.Position) then
+    local targetPart = target.Character[AimConfig.Position]
+    local targetPosition = targetPart.Position
+    if IsInFOV(targetPosition) then
+      local timeToTarget = ((targetPart.Position - game.Workspace.CurrentCamera.CFrame.Position)).Magnitude / 1000
+      local predictedPosition = targetPosition + targetPart.AssemblyLinearVelocity * timeToTarget + 0.5 * Vector3.new(0, -workspace.Gravity, 0) * timeToTarget ^ 2
+      if (not AimConfig.teamCheck or not IsSameTeam(target)) and (not AimConfig.wallCheck or CheckWall(target, AimConfig.Position)) then
+        local smoothnessFactor = math.max(0.1, 1 / AimConfig.smoothness)
+        local aimSpeedFactor = math.max(0.1, AimConfig.aimSpeed * 0.1)
+        local currentCFrame = game.Workspace.CurrentCamera.CFrame
+        game.Workspace.CurrentCamera.CFrame = currentCFrame:Lerp(CFrame.new(currentCFrame.Position, predictedPosition), smoothnessFactor * aimSpeedFactor)
+        if FOVLine1 then
+          local viewportPoint = game.Workspace.CurrentCamera:WorldToViewportPoint(predictedPosition)
+          FOVLine1.From = Vector2.new(game.Workspace.CurrentCamera.ViewportSize.X / 2, game.Workspace.CurrentCamera.ViewportSize.Y / 2)
+          FOVLine1.To = Vector2.new(viewportPoint.X, viewportPoint.Y)
+          FOVLine1.Visible = true
+        end
+        if AimConfig.autoFire then
+          local tool = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool")
+          if tool and 1 / AimConfig.fireRate <= tick() - (tool:GetAttribute("LastFireTime") or 0) then
+            tool:Activate()
+            tool:SetAttribute("LastFireTime", tick())
+          end
+        end
+      end
+    elseif FOVLine1 then
+      FOVLine1.Visible = false
+    end
+  elseif FOVLine1 then
+    FOVLine1.Visible = false
+  end
+end
+local function UpdateDynamicFOV()
+  
+  if AimConfig.dynamicFOV then
+    local target = GetBestTarget(AimConfig.Position)
+    if target and target.Character:FindFirstChild(AimConfig.Position) then
+      AimConfig.fovsize = math.clamp(20 / ((target.Character[AimConfig.Position].Position - game.Workspace.CurrentCamera.CFrame.Position)).Magnitude / 50 * (1 + target.Character[AimConfig.Position].AssemblyLinearVelocity.Magnitude / 100), 10, 100)
+      UpdateFOVSettings()
+    end
+  end
+end
+game:GetService("RunService").RenderStepped:Connect(function()
+  
+  if AimConfig.fovlookAt then
+    if AimConfig.aimMode == "AI" then
+      AimAI()
+    elseif AimConfig.aimMode == "Function" then
+      AimFunction()
+    end
+    UpdateDynamicFOV()
+  end
+end)
+local MotionBlurEnabled = false
+local BlurEffectInstance = nil
+local BlurAmount = 15
+local BlurAmplifier = 5
+local BlurSmoothness = 0.15
+local BlurThreshold = 0.05
+local BlurIntensity = 1
+local BlurColor = Color3.new(0, 0, 0)
+local BlurDirection = Vector2.new(1, 0)
+local BlurUV = {
+  0,
+  0,
+  1,
+  1
+}
+local PreviousLookVector = Vector3.zero
+local LastUpdateTime = tick()
+local BlurTypes = {
+  "MotionBlur",
+  "RadialBlur",
+  "DirectionalBlur"
+}
+local CurrentBlurType = BlurTypes[1]
+local BlurPresets = {
+  {
+    name = "默认",
+    amount = 15,
+    amplifier = 5,
+    smoothness = 0.15,
+    threshold = 0.05,
+  },
+  {
+    name = "强烈",
+    amount = 25,
+    amplifier = 10,
+    smoothness = 0.05,
+    threshold = 0.02,
+  },
+  {
+    name = "柔和",
+    amount = 8,
+    amplifier = 3,
+    smoothness = 0.2,
+    threshold = 0.1,
+  }
+}
+local function CreateBlurEffect(parent)
+  
+  if BlurEffectInstance then
+    BlurEffectInstance:Destroy()
+  end
+  BlurEffectInstance = Instance.new("BlurEffect", parent)
+  BlurEffectInstance.Name = "EnhancedMotionBlur"
+  BlurEffectInstance.Size = 0
+end
+local function UpdateMotionBlur(camera, humanoid)
+  
+  if not BlurEffectInstance or not MotionBlurEnabled then
+    return 
+  end
+  local currentLookVector = camera.CFrame.LookVector
+  local lookVectorChange = (currentLookVector - PreviousLookVector).Magnitude
+  if BlurThreshold < lookVectorChange then
+    BlurEffectInstance.Size = BlurEffectInstance.Size + (math.abs(lookVectorChange) * BlurAmount * BlurAmplifier - BlurEffectInstance.Size) * BlurSmoothness
+  else
+    BlurEffectInstance.Size = BlurEffectInstance.Size * (1 - BlurSmoothness)
+  end
+  PreviousLookVector = currentLookVector
+end
+local function SetBlurType(blurType)
+  
+  CurrentBlurType = blurType
+  if BlurEffectInstance then
+    BlurEffectInstance:Destroy()
+    CreateBlurEffect(workspace.CurrentCamera)
+  end
+end
+local function ApplyBlurPreset(preset)
+  
+  BlurAmount = preset.amount
+  BlurAmplifier = preset.amplifier
+  BlurSmoothness = preset.smoothness
+  BlurThreshold = preset.threshold
+end
+local TeleportWalkThreads = 5
+local TeleportWalkEnabled = false
+local TeleportWalkRunning = false
+local LocalPlayer = game:GetService("Players").LocalPlayer
+local HeartbeatService = game:GetService("RunService").Heartbeat
+local function TeleportWalk(character, humanoid)
+  
+  if TeleportWalkEnabled == true then
+    TeleportWalkRunning = false
+    HeartbeatService:Wait()
+    task.wait(0.1)
+    HeartbeatService:Wait()
+    for threadIndex = 1, TeleportWalkThreads, 1 do
+      spawn(function()
+        
+        TeleportWalkRunning = true
+        while TeleportWalkRunning do
+          local deltaTime = HeartbeatService:Wait()
+          if deltaTime then
+            if character then
+              if humanoid then
+                if humanoid.Parent then
+                  local moveMagnitude = humanoid.MoveDirection.Magnitude
+                  if moveMagnitude > 0 then
+                    character:TranslateBy(humanoid.MoveDirection)
+                  end
+                else
+                  break
+                end
+              else
+                break
+              end
+            else
+              break
+            end
+          else
+            break
+          end
+        end
+      end)
+    end
+  end
+end
+LocalPlayer.CharacterAdded:Connect(function(character)
+  
+  local characterInstance = LocalPlayer.Character
+  if characterInstance then
+    task.wait(0.7)
+    characterInstance.Humanoid.PlatformStand = false
+    characterInstance.Animate.Disabled = false
+  end
+end)
+local UILibrary = loadstring(game:HttpGet([[https://raw.githubusercontent.com/xiaopi77/xiaopi77/main/%E7%9A%AE%E8%84%9A%E6%9C%ACUI%E6%BA%90%E7%A0%81.lua]]))():new("皮脚本")
+local InfoTab = UILibrary:Tab("『信息』", "18930406865")
+local PlayerInfoSection = InfoTab:section("玩家信息", true)
+PlayerInfoSection:Label("您的注入器:" .. identifyexecutor())
+PlayerInfoSection:Label("您的用户名:" .. game.Players.LocalPlayer.Character.Name)
+PlayerInfoSection:Label("您的名称:" .. game.Players.LocalPlayer.DisplayName)
+PlayerInfoSection:Label("您当前服务器的ID:" .. game.GameId)
+PlayerInfoSection:Label("您的用户ID:" .. game.Players.LocalPlayer.UserId)
+PlayerInfoSection:Label("您的客户端ID:" .. game:GetService("RbxAnalyticsService"):GetClientId())
+PlayerInfoSection:Toggle("开/关皮脚本用户名称显示", "Toggle", false, function(enabled)
+  
+  if enabled then
+    XM = true
+    while XM do
+      local screenGui = Instance.new("ScreenGui", game.CoreGui)
+      local textLabel = Instance.new("TextLabel", screenGui)
+      local gradient = Instance.new("UIGradient")
+      screenGui.Name = "UserGui"
+      screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+      screenGui.Enabled = true
+      textLabel.Name = "UserLabel"
+      textLabel.BackgroundColor3 = Color3.new(1, 1, 1)
+      textLabel.BackgroundTransparency = 1
+      textLabel.BorderColor3 = Color3.new(0, 0, 0)
+      textLabel.Position = UDim2.new(0.8, 0.8, 0.0009, 0)
+      textLabel.Size = UDim2.new(0, 135, 0, 50)
+      textLabel.Font = Enum.Font.GothamSemibold
+      textLabel.Text = "尊贵的皮脚本用户: " .. game.Players.LocalPlayer.DisplayName
+      textLabel.TextColor3 = Color3.new(1, 1, 1)
+      textLabel.TextScaled = true
+      textLabel.TextSize = 14
+      textLabel.TextWrapped = true
+      textLabel.Visible = true
+      gradient.Color = ColorSequence.new({
+        ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 0, 0)),
+        ColorSequenceKeypoint.new(0.1, Color3.fromRGB(255, 127, 0)),
+        ColorSequenceKeypoint.new(0.2, Color3.fromRGB(255, 255, 0)),
+        ColorSequenceKeypoint.new(0.3, Color3.fromRGB(0, 255, 0)),
+        ColorSequenceKeypoint.new(0.4, Color3.fromRGB(0, 255, 255)),
+        ColorSequenceKeypoint.new(0.5, Color3.fromRGB(0, 0, 255)),
+        ColorSequenceKeypoint.new(0.6, Color3.fromRGB(139, 0, 255)),
+        ColorSequenceKeypoint.new(0.7, Color3.fromRGB(255, 0, 0)),
+        ColorSequenceKeypoint.new(0.8, Color3.fromRGB(255, 127, 0)),
+        ColorSequenceKeypoint.new(0.9, Color3.fromRGB(255, 255, 0)),
+        ColorSequenceKeypoint.new(1, Color3.fromRGB(0, 255, 0))
+      })
+      gradient.Rotation = 10
+      gradient.Parent = textLabel
+      game:GetService("TweenService"):Create(gradient, TweenInfo.new(7, Enum.EasingStyle.Linear, Enum.EasingDirection.In, -1), {
+        Rotation = 360,
+      }):Play()
+      wait(0.1)
+    end
+  else
+    XM = false
+  end
+end)
+local AuthorInfoSection = InfoTab:section("作者信息", true)
+AuthorInfoSection:Label("皮脚本")
+AuthorInfoSection:Label("永不跑路的脚本")
+AuthorInfoSection:Label("作者: 小皮")
+AuthorInfoSection:Label("作者QQ: 2131869117")
+AuthorInfoSection:Label("皮脚本QQ主群: 894995244")
+AuthorInfoSection:Label("皮脚本QQ副群: 1002100032")
+AuthorInfoSection:Label("皮脚本QQ二群: 746849372")
+AuthorInfoSection:Label("皮脚本QQ三群: 571553667")
+AuthorInfoSection:Label("皮脚本QQ四群: 609250910")
+AuthorInfoSection:Label("解卡群: 252251548")
+AuthorInfoSection:Label("解卡群二群: 954149920")
+AuthorInfoSection:Label("十分感谢月星对我的支持与帮助")
+AuthorInfoSection:Label("给我提供了许多的功能源码")
+AuthorInfoSection:Label("谢谢您的支持与帮助^ω^")
+AuthorInfoSection:Button("复制作者QQ", function()
+  
+  setclipboard("2131869117")
+end)
+AuthorInfoSection:Button("复制皮脚本QQ主群", function()
+  
+  setclipboard("894995244")
+end)
+AuthorInfoSection:Button("复制皮脚本QQ副群", function()
+  
+  setclipboard("1002100032")
+end)
+AuthorInfoSection:Button("复制皮脚本QQ二群", function()
+  
+  setclipboard("746849372")
+end)
+AuthorInfoSection:Button("复制皮脚本QQ三群", function()
+  
+  setclipboard("571553667")
+end)
+AuthorInfoSection:Button("复制皮脚本QQ四群", function()
+  
+  setclipboard("609250910")
+end)
+AuthorInfoSection:Button("复制解卡群", function()
+  
+  setclipboard("252251548")
+end)
+AuthorInfoSection:Button("复制解卡群二群", function()
+  
+  setclipboard("954149920")
+end)
+local UISettingsSection = InfoTab:section("UI设置", true)
+UISettingsSection:Toggle("脚本框架变小一点", "", false, function(enabled)
+  
+  if enabled then
+    game:GetService("CoreGui").frosty.Main.Style = "DropShadow"
+  else
+    game:GetService("CoreGui").frosty.Main.Style = "Custom"
+  end
+end)
+UISettingsSection:Button("关闭脚本", function()
+  
+  game:GetService("CoreGui").frosty:Destroy()
+end)
+local AnnouncementSection = UILibrary:Tab("『公告』", "18930406865"):section("公告", true)
+AnnouncementSection:Label("此脚本为免费缝合")
+AnnouncementSection:Label("不许倒卖圈钱")
+AnnouncementSection:Label("倒卖死全家 倒卖者我操你妈")
+AnnouncementSection:Label("严禁倒卖 倒卖无父无母")
+AnnouncementSection:Label("有时间就会更新")
+local GeneralTab = UILibrary:Tab("『通用』", "18930406865")
+local LocalPlayerSection = GeneralTab:section("本地玩家", true)
+local sliderMethod = "Slider"
+local sliderLabel = "设置速度"
+LocalPlayerSection:[sliderMethod](sliderLabel, "WalkSpeed", game.Players.LocalPlayer.Character.Humanoid.WalkSpeed, 16, 400, false, function(walkSpeed)
+  
+  spawn(function()
+    
+    while task.wait() do
+      local humanoid = game.Players.LocalPlayer.Character.Humanoid
+      humanoid.WalkSpeed = walkSpeed
+    end
+  end)
+end)
+sliderMethod = "Slider"
+sliderLabel = "设置跳跃高度"
+LocalPlayerSection:[sliderMethod](sliderLabel, "JumpPower", game.Players.LocalPlayer.Character.Humanoid.JumpPower, 50, 400, false, function(jumpPower)
+  
+  spawn(function()
+    
+    while task.wait() do
+      local humanoid = game.Players.LocalPlayer.Character.Humanoid
+      humanoid.JumpPower = jumpPower
+    end
+  end)
+end)
+sliderMethod = "Slider"
+sliderLabel = "设置血量"
+LocalPlayerSection:[sliderMethod](sliderLabel, "Sliderflag", 100, 100, 10000, false, function(health)
+  
+  game.Players.LocalPlayer.Character.Humanoid.Health = health
+end)
+sliderMethod = "Slider"
+sliderLabel = "设置血量上限"
+LocalPlayerSection:[sliderMethod](sliderLabel, "Slider", 100, 100, 10000, false, function(maxHealth)
+  
+  game.Players.LocalPlayer.Character.Humanoid.MaxHealth = maxHealth
+end)
+sliderMethod = "Slider"
+sliderLabel = "设置缩放距离"
+LocalPlayerSection:[sliderMethod](sliderLabel, "ZOOOOOM OUT!", 128, 128, 200000, false, function(zoomDistance)
+  
+  game:GetService("Players").LocalPlayer.CameraMaxZoomDistance = zoomDistance
+end)
+sliderMethod = "Slider"
+sliderLabel = "设置缩放焦距(正常70)"
+LocalPlayerSection:[sliderMethod](sliderLabel, "Sliderflag", 70, 0.1, 250, false, function(fieldOfView)
+  
+  game.Workspace.CurrentCamera.FieldOfView = fieldOfView
+end)
+sliderMethod = "Slider"
+sliderLabel = "设置帧率FPS"
+LocalPlayerSection:[sliderMethod](sliderLabel, "Sliderflag", 300, 300, 100000, false, function(fps)
+  
+  setfpscap(fps)
+end)
+sliderMethod = "Slider"
+sliderLabel = "设置玩家头部大小"
+LocalPlayerSection:[sliderMethod](sliderLabel, "Head", 1, 0, 1000, false, function(headSize)
+  
+  local headSizeConfig = {
+    Size = headSize,
+  }
+  local Players = game:GetService("Players")
+  local localPlayer = Players.LocalPlayer
+  function IsPlayerAlive(player)
+    
+    if player then
+      local character = player.Character
+      if character then
+        character = player.Character:FindFirstChild("Head") and (player.Character:FindFirstChild("Humanoid") or false)
+      else
+        goto label_17	
+      end
+      return character
+    end
+    return false
+  end
+  for _, player in pairs(Players:GetPlayers()) do
+    if player ~= localPlayer and IsPlayerAlive(player) then
+      player.Character.Head.Massless = true
+      player.Character.Head.Size = Vector3.new(headSizeConfig.Size, headSizeConfig.Size, headSizeConfig.Size)
+    end
+    player.CharacterAdded:Connect(function()
+      
+      while not IsPlayerAlive(player) do
+        wait()
+      end
+      player.Character.Head.Massless = true
+      player.Character.Head.Size = Vector3.new(headSizeConfig.Size, headSizeConfig.Size, headSizeConfig.Size)
+    end)
+    
+  end
+  Players.PlayerAdded:Connect(function(newPlayer)
+    
+    newPlayer.CharacterAdded:Wait()
+    if IsPlayerAlive(newPlayer) then
+      newPlayer.Character.Head.Massless = true
+      newPlayer.Character.Head.Size = Vector3.new(headSizeConfig.Size, headSizeConfig.Size, headSizeConfig.Size)
+    end
+    newPlayer.CharacterAdded:Connect(function()
+      
+      while not IsPlayerAlive(newPlayer) do
+        wait()
+      end
+      newPlayer.Character.Head.Massless = true
+      newPlayer.Character.Head.Size = Vector3.new(headSizeConfig.Size, headSizeConfig.Size, headSizeConfig.Size)
+    end)
+  end)
+end)
+textboxMethod = "Textbox"
+textboxLabel = "设置重力"
+LocalPlayerSection:[textboxMethod](textboxLabel, "Gravity", "输入", function(gravity)
+  
+  spawn(function()
+    
+    while task.wait() do
+      local workspace = game.Workspace
+      workspace.Gravity = gravity
+    end
+  end)
+end)
+textboxMethod = "Textbox"
+textboxLabel = "设置快速跑步"
+LocalPlayerSection:[textboxMethod](textboxLabel, "run", "输入", function(speedValue)
+  
+  Speed = speedValue
+end)
+LocalPlayerSection:Toggle("开启快速跑步(开/关)", "switch", false, function(enabled)
+  
+  if enabled == true then
+    sudu = game:GetService("RunService").Heartbeat:Connect(function()
+      
+      if game:GetService("Players").LocalPlayer.Character and game:GetService("Players").LocalPlayer.Character.Humanoid and game:GetService("Players").LocalPlayer.Character.Humanoid.Parent and 0 < game:GetService("Players").LocalPlayer.Character.Humanoid.MoveDirection.Magnitude then
+        game:GetService("Players").LocalPlayer.Character:TranslateBy(game:GetService("Players").LocalPlayer.Character.Humanoid.MoveDirection * Speed / 0.5)
+      end
+    end)
+  elseif not enabled and sudu then
+    sudu:Disconnect()
+    sudu = nil
+  end
+end)
+local GeneralSection = GeneralTab:section("通用", true)
+GeneralSection:Toggle("夜视", "Light", false, function(enabled)
+  
+  spawn(function()
+    
+    while task.wait() do
+      local lighting = game.Lighting
+      if enabled then
+        lighting.Ambient = Color3.new(1, 1, 1)
+      else
+        lighting.Ambient = Color3.new(0, 0, 0)
+      end
+    end
+  end)
+end)
+GeneralSection:Button("透视", function()
+  
+  loadstring(game:HttpGet("https://pastefy.app/LE2hzECZ/raw"))()
+end)
+local dropdownMethod = "Dropdown"
+local dropdownLabel = "选择帧率FPS"
+GeneralSection:[dropdownMethod](dropdownLabel, "CameraType", {
+  "FPS 5",
+  "FPS 15",
+  "FPS 30 ",
+  "FPS 45",
+  "FPS 60",
+  "FPS 90",
+  "FPS 120",
+  "FPS 240",
+  "最大FPS"
+}, function(selectedFPS)
+  
+  if selectedFPS == "FPS 5" then
+    setfpscap(5)
+  elseif selectedFPS == "FPS 15" then
+    setfpscap(15)
+  elseif selectedFPS == "FPS 30" then
+    setfpscap(30)
+  elseif selectedFPS == "FPS 45" then
+    setfpscap(45)
+  elseif selectedFPS == "FPS 60" then
+    setfpscap(60)
+  elseif selectedFPS == "FPS 90" then
+    setfpscap(90)
+  elseif selectedFPS == "FPS 120" then
+    setfpscap(120)
+  elseif selectedFPS == "FPS 240" then
+    setfpscap(240)
+  elseif selectedFPS == "最大FPS" then
+    setfpscap(10000)
+  end
+end)
+GeneralSection:Toggle("开启杀戮光环", "Toggle", false, function(enabled)
+  
+  local Players = nil	
+  local isRunning = nil	
+  if enabled then
+    local existingConnections = getgenv().configs and getgenv().configs.connections
+    if existingConnections then
+      local disableEvent = getgenv().configs.Disable
+      for _, connection in pairs(existingConnections) d
